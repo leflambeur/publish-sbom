@@ -13,6 +13,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - -ie
+    - -i
+    - -e
     - -u ${{inputs.url}}
     - ${{ inputs.sbom-files }}
