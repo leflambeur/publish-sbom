@@ -72,7 +72,7 @@ def main():
     else:
         client_secret = args.secret
 
-    rkvst_url = args.url
+    rkvst_url = args.rkvst_url
 
     try:
             authtoken = generate_token(client_id, client_secret, rkvst_url)
