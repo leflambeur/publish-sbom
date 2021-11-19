@@ -81,10 +81,7 @@ def main():
             "ERROR: Auth token not found. Please check your CLIENT_ID and AUTH_TOKEN."
         )
 
-    print("Token Generated\n\n" 
-    + rkvst_url
-    + "\n\n"
-    + authtoken)
+    print("Token Generated")
 
     sbom_files = args.sbomFiles
 
