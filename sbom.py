@@ -85,6 +85,8 @@ def main():
 
     sbom_files = args.sbomFiles
 
+    print(args.sbomFiles)
+
     arch = archivist.Archivist(
         rkvst_url,
         auth=authtoken,
