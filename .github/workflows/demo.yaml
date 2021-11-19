@@ -14,14 +14,13 @@ jobs:
         with:
           username: yewnorosen
           password: ${{ secrets.YEWNOROSEN_DOCKERHUB_PUSH }}
-      - name: checkout master
+      - name: checkout main
         uses: actions/checkout@v2
         with:
-          path: master
+          path: main
       - name: Build and push publish-sbom
         uses: docker/build-push-action@v2
         with:
-          context: master/mainline/alpine
           push: ${{ github.event_name != 'pull_request' }}
           tags: yewnorosen/publish-sbom:latest
   
