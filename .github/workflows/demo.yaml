@@ -43,7 +43,7 @@ jobs:
        - uses: leflambeur/publish-sbom@v0.0.3l
          env:
            CLIENT_ID: ${{ secrets.CLIENT_ID }}
-           SECRET: ${{ secrets.CLIENT_SECRET }}
+           SECRET: ${{ secrets.SECRET }}
          with:
            url: https://qa.wild.jitsuin.io
            sbom-files: "yewnorosen-rkvst-sbom_latest.cyclonedx/yewnorosen-rkvst-sbom_latest.cyclonedx"

@@ -23,8 +23,6 @@ def generate_token(client_id, client_secret, rkvst_url):
     print("Generating Token")
     token_request = requests.post(token_endpoint, headers=headers, data=params).json()
 
-    print(token_request.get("access_token"))
-
     return token_request.get("access_token")
 
 def upload_sbom(arch, sbom_files):
@@ -54,7 +52,6 @@ def main():
 
     args = parser.parse_args()
 
-    print(args.envClientId)
     if args.envClientId == True:
         try:
             client_id = os.getenv("CLIENT_ID")
@@ -64,10 +61,6 @@ def main():
             )
     else:
         client_id = args.clientId
-
-    print(client_id)
-
-    print(args.envSecret)
 
     if args.envSecret == True:
         try:
@@ -79,11 +72,7 @@ def main():
     else:
         client_secret = args.secret
 
-    print(client_secret)
-
     rkvst_url = args.url
-
-    print(rkvst_url)
 
     try:
             authtoken = generate_token(client_id, client_secret, rkvst_url)
