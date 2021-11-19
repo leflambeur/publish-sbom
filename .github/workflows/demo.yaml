@@ -46,4 +46,4 @@ jobs:
            SECRET: ${{ secrets.SECRET }}
          with:
            url: https://qa.wild.jitsuin.io
-           sbom-files: "yewnorosen-rkvst-sbom_latest.cyclonedx/yewnorosen-rkvst-sbom_latest.cyclonedx"
+           sbom-files: "yewnorosen-publish-sbom_latest.cyclonedx/yewnorosen-publish-sbom_latest.cyclonedx"
