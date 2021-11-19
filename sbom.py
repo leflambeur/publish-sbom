@@ -40,19 +40,19 @@ def main():
     
     parser.add_argument('--url', '-u', dest='rkvst_url', default='https://sbom.rkvst.io', help='SBOM URL to upload to')
     #parser.add_argument('--no-publish', dest='no_publish', action='store_true', help='Upload an SBOM without publishing')
-    parser.add_argument('sbom-files', metavar='<sbom-file>', nargs='+', help='SBOM to be uploaded')
+    parser.add_argument('sbomFiles', metavar='<sbom-file>', nargs='+', help='SBOM to be uploaded')
 
     client_group = parser.add_mutually_exclusive_group(required=True)
-    client_group.add_argument('--client-id', '-c', nargs=1, help='Specify Application CLIENT_ID inline')
-    client_group.add_argument('--env-client-id', '-i', action='store_true',  help='Specify if your Application CLIENT_ID is an Env Var')
+    client_group.add_argument('--clientId', '-c', nargs=1, help='Specify Application CLIENT_ID inline')
+    client_group.add_argument('--envClientId', '-i', action='store_true',  help='Specify if your Application CLIENT_ID is an Env Var')
 
     secret_group = parser.add_mutually_exclusive_group(required=True)
     secret_group.add_argument('--secret', '-s', nargs=1, help='Specify Application SECRET inline')
-    secret_group.add_argument('--env-secret', '-e', action='store_true',  help='Specify if your Application SECRET is an Env Var')
+    secret_group.add_argument('--envSecret', '-e', action='store_true',  help='Specify if your Application SECRET is an Env Var')
 
     args = parser.parse_args()
 
-    if args.env-client-id == True:
+    if args.envClientId == True:
         try:
             client_id = os.getenv("CLIENT_ID")
         except:
@@ -60,9 +60,9 @@ def main():
                 "ERROR: CLIENT_ID EnvVar not found"
             )
     else:
-        client_id = args.client-id
+        client_id = args.clientId
 
-    if args.env-secret == True:
+    if args.envSecret == True:
         try:
             client_secret= os.getenv("SECRET")
         except:
@@ -72,7 +72,7 @@ def main():
     else:
         client_secret = args.secret
 
-    rkvst_url = args.rkvst-url
+    rkvst_url = args.url
 
     try:
             authtoken = generate_token(client_id, client_secret, rkvst_url)
@@ -83,7 +83,7 @@ def main():
 
     print("Token Generated")
 
-    sbom_files = args.sbom-files
+    sbom_files = args.sbomFiles
 
     arch = archivist.Archivist(
         rkvst_url,
