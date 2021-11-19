@@ -28,9 +28,12 @@ def generate_token(client_id, client_secret, rkvst_url):
 def upload_sbom(arch, sbom_files):
 #no_publish
     for sbom in sbom_files:
-        print("Uploading" + sbom)
-        with open(sbom) as fd:
-            arch.sboms.upload(fd)
+        print("Uploading " + sbom)
+        try:
+            with open(sbom) as fd:
+                arch.sboms.upload(fd)
+        except:
+            exit("Failed to Open " + sbom)
         #if no_publish == False:
          #   arch.sboms.publish(sbom_upload)
     return("Uploading Complete")
