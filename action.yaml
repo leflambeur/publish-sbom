@@ -1,0 +1,42 @@
+# action.yml
+name: 'yewnorosen-test'
+description: 'something-something'
+inputs:
+  command:  # id of input
+    description: 'Event Type'
+    required: true
+    default: 'release'
+  asset_id:
+    description: 'RKVST Asset Identity (assets/{{UUID}})'
+    required: true
+  attrs:
+    description: 'Core Event Attributes'
+    required: true
+    default: '{"name": "${{ github.repository }}", "description": "${{ github.event.release.tag_name }} - ${{ github.repository }}", "hash": "${{ github.sha }}", "version": "${{ github.event.release.tag_name }}", "author": "${{ github.actor }}", "supplier": "${{ github.repository_owner }}", "uuid": "${{ github.repository }}"}'
+  attachments:
+    description: 'Array of build artifacts to attach to event'
+    required: true
+    default: '[]'
+  custom_attrs: 
+    description: 'Additional Event Attributes'
+    required: false
+    default: '{}'
+  latest_sbom:
+    description: 'Only for use with Release Event - used if uploaded sbom is not for latest version'
+    required: false
+    default: '{"name": "${{ github.repository }}", "description": "${{ github.event.release.tag_name }} - ${{ github.repository }}", "hash": "${{ github.sha }}", "version": "${{ github.event.release.tag_name }}", "author": "${{ github.actor }}", "supplier": "${{ github.repository_owner }}", "uuid": "${{ github.repository }}"}'
+  custom_asset_attrs:
+    description: 'Only for use with Release Event - Additional Asset Attributes'
+    required: false
+    default: '{}'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.command }}
+    - ${{ inputs.asset_id }}
+    - ${{ inputs.attrs }}
+    - ${{ inputs.attachments }}
+    - ${{ inputs.custom_attrs }}
+    - ${{ inputs.latest_sbom }}
+    - ${{ inputs.custom_asset_attrs }}
