@@ -28,11 +28,12 @@ def generate_token(client_id, client_secret, rkvst_url):
 def upload_sbom(arch, sbom_files):
 #no_publish
     for sbom in sbom_files:
+        print("Uploading" + sbom)
         with open(sbom) as fd:
-            sbom_upload = arch.sboms.upload(fd)
-            print(sbom_upload)
+            arch.sboms.upload(fd)
         #if no_publish == False:
          #   arch.sboms.publish(sbom_upload)
+    return("Uploading Complete")
 
 def main():
 
