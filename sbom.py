@@ -30,6 +30,7 @@ def upload_sbom(arch, sbom_files):
     for sbom in sbom_files:
         with open(sbom) as fd:
             sbom_upload = arch.sboms.upload(fd)
+            print(sbom_upload)
         #if no_publish == False:
          #   arch.sboms.publish(sbom_upload)
 
@@ -51,7 +52,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args['env-client-id'] == True:
+    if args.env-client-id == True:
         try:
             client_id = os.getenv("CLIENT_ID")
         except:
@@ -59,9 +60,9 @@ def main():
                 "ERROR: CLIENT_ID EnvVar not found"
             )
     else:
-        client_id = args['client-id']
+        client_id = args.client-id
 
-    if args['env-secret'] == True:
+    if args.env-secret == True:
         try:
             client_secret= os.getenv("SECRET")
         except:
@@ -69,9 +70,9 @@ def main():
                 "ERROR: SECRET EnvVar not found"
             )
     else:
-        client_secret = args['secret']
+        client_secret = args.secret
 
-    rkvst_url = args['rkvst-url']
+    rkvst_url = args.rkvst-url
 
     try:
             authtoken = generate_token(client_id, client_secret, rkvst_url)
@@ -82,7 +83,7 @@ def main():
 
     print("Token Generated")
 
-    sbom_files = args['sbom-files']
+    sbom_files = args.sbom-files
 
     arch = archivist.Archivist(
         rkvst_url,
