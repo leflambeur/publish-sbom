@@ -38,7 +38,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='RKVST for SBOM CLI Tool')
     
-    parser.add_argument('--url', '-u', dest='rkvst_url', default='https://sbom.rkvst.io', help='SBOM URL to upload to')
+    parser.add_argument('--url', '-u', default='https://sbom.rkvst.io', help='SBOM URL to upload to')
     #parser.add_argument('--no-publish', dest='no_publish', action='store_true', help='Upload an SBOM without publishing')
     parser.add_argument('sbomFiles', metavar='<sbom-file>', nargs='+', help='SBOM to be uploaded')
 
@@ -72,7 +72,7 @@ def main():
     else:
         client_secret = args.secret
 
-    rkvst_url = args.rkvst_url
+    rkvst_url = args.url
 
     try:
             authtoken = generate_token(client_id, client_secret, rkvst_url)
