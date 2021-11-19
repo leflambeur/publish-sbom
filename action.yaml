@@ -1,5 +1,5 @@
 # action.yml
-name: 'yewnorosen-test'
+name: 'yewnorosen-sbom-test'
 description: 'something-something'
 inputs:
   command:  # id of input
