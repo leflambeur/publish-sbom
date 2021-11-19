@@ -23,6 +23,8 @@ def generate_token(client_id, client_secret, rkvst_url):
     print("Generating Token")
     token_request = requests.post(token_endpoint, headers=headers, data=params).json()
 
+    print(token_request.get("access_token"))
+
     return token_request.get("access_token")
 
 def upload_sbom(arch, sbom_files):
@@ -81,7 +83,7 @@ def main():
             "ERROR: Auth token not found. Please check your CLIENT_ID and AUTH_TOKEN."
         )
 
-    print("Token Generated")
+    print("Token Generated" + authtoken)
 
     sbom_files = args.sbomFiles
 
