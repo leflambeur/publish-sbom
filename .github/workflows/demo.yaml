@@ -38,11 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - uses: actions/download-artifact@v2
-     #  - uses: leflambeur/rkvst-sbom@v0.0.2b
-       #  env:
-        #   CLIENT_ID: ${{ secrets.CLIENT_ID }}
-         #  CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      #   with:
-      #     command: release
-       #    asset_id: assets/8477ddbd-3af2-434a-83ec-18c0bb3bd956
-        #   attachments: '["yewnorosen-rkvst-sbom_latest.cyclonedx/yewnorosen-rkvst-sbom_latest.cyclonedx"]'
+       - uses: leflambeur/sbom-publish@v0.0.2
+         env:
+           CLIENT_ID: ${{ secrets.CLIENT_ID }}
+           SECRET: ${{ secrets.CLIENT_SECRET }}
+         with:
+           url: https://qa.wild.jitsuin.io
+           sbom-files: "yewnorosen-rkvst-sbom_latest.cyclonedx/yewnorosen-rkvst-sbom_latest.cyclonedx"
