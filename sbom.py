@@ -64,6 +64,8 @@ def main():
     else:
         client_id = args.clientId
 
+    print(client_id)
+
     if args.envSecret == True:
         try:
             client_secret= os.getenv("SECRET")
@@ -74,6 +76,8 @@ def main():
     else:
         client_secret = args.secret
 
+    print(client_secret)
+    
     rkvst_url = args.url
 
     try:
