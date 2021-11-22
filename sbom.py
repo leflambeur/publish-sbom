@@ -36,7 +36,6 @@ def upload_sbom(arch, sbom_files, no_publish):
                 print("Publishing " + sbom_upload.identity)
                 arch.sboms.publish(sbom_upload.identity)
             print(sbom_upload)
-
     return
 
 def main():
