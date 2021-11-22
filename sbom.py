@@ -31,6 +31,7 @@ def upload_sbom(arch, sbom_files, no_publish):
         print("Uploading " + sbom)
         with open(sbom, 'rb') as fd:
             sbom_upload = arch.sboms.upload(fd)
+            print(sbom_upload)
             if no_publish == False:
                 print("Publishing" + sbom)
                 arch.sboms.publish(sbom_upload)
