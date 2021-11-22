@@ -25,25 +25,27 @@ def generate_token(client_id, client_secret, rkvst_url):
 
     return token_request.get("access_token")
 
-def upload_sbom(arch, sbom_files):
+def upload_sbom(arch, sbom_files, no_publish):
 #no_publish
     for sbom in sbom_files:
         print("Uploading " + sbom)
         try:
             with open(sbom) as fd:
-                arch.sboms.upload(fd)
+                sbom_upload = arch.sboms.upload(fd)
+                if no_publish == False:
+                    arch.sboms.publish(sbom_upload)
+                print(sbom_upload)
         except:
             exit("Failed to Open " + sbom)
-        #if no_publish == False:
-         #   arch.sboms.publish(sbom_upload)
-    return("Uploading Complete")
+
+    return
 
 def main():
 
     parser = argparse.ArgumentParser(description='RKVST for SBOM CLI Tool')
     
     parser.add_argument('--url', '-u', default='https://sbom.rkvst.io', help='SBOM URL to upload to')
-    #parser.add_argument('--no-publish', dest='no_publish', action='store_true', help='Upload an SBOM without publishing')
+    parser.add_argument('--noPublish', action='store_true', help='Upload an SBOM without publishing')
     parser.add_argument('sbomFiles', metavar='<sbom-file>', nargs='+', help='SBOM to be uploaded')
 
     client_group = parser.add_mutually_exclusive_group(required=True)
@@ -95,13 +97,9 @@ def main():
         rkvst_url,
         auth=authtoken,
         )
-# args['no-publish']
-    try:    
-        upload_sbom(arch, sbom_files)
-    except:
-        exit(
-            "ERROR: Failed to Upload SBOMS"
-            )
+
+    upload_sbom(arch, sbom_files, args.noPublish)
+
 
 if __name__ == "__main__":
     main()
