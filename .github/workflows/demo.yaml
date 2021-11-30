@@ -45,5 +45,5 @@ jobs:
            CLIENT_ID: ${{ secrets.CLIENT_ID }}
            SECRET: ${{ secrets.SECRET }}
          with:
-           url: https://sbom.soak.wild.jitsuin.io
+           url: https://app.soak.wild.jitsuin.io
            sbom-files: "yewnorosen-publish-sbom_latest.cyclonedx/yewnorosen-publish-sbom_latest.cyclonedx"
