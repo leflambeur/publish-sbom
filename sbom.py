@@ -1,4 +1,4 @@
-from archivist import archivist
+from archivist.archivist import Archivist
 import argparse
 import os
 
