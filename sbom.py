@@ -54,17 +54,11 @@ def main():
 
     rkvst_url = args.url
 
-    arch = archivist.Archivist(
+    
+    arch = Archivist(
         rkvst_url,
-        "This is a Token"
-        )
-
-    try:
-            arch.appidp.token(client_id, client_secret)
-    except ArchivistError:
-        exit(
-            "ERROR: Auth token not found. Please check your CLIENT_ID and AUTH_TOKEN."
-        )
+        (client_id, client_secret),
+    )
 
     print("Token Generated")
 
