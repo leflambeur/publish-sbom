@@ -1,1 +1,1 @@
-jitsuin-archivist==0.8.0
+jitsuin-archivist==0.9.1

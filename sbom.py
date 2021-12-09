@@ -1,29 +1,7 @@
 from archivist import archivist
-import sys
-import json
 import argparse
 import os
-import requests
 
-def generate_token(client_id, client_secret, rkvst_url):
-
-    print("Found Credentials")
-
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-
-    params = {
-        "grant_type": "client_credentials",
-        "client_id": client_id,
-        "client_secret": client_secret,
-        
-    }
-
-    token_endpoint = rkvst_url + '/archivist/iam/v1/appidp/token'
-
-    print("Generating Token")
-    token_request = requests.post(token_endpoint, headers=headers, data=params).json()
-
-    return token_request.get("access_token")
 
 def upload_sbom(arch, sbom_files, no_publish):
 #no_publish
@@ -57,9 +35,8 @@ def main():
     args = parser.parse_args()
 
     if args.envClientId == True:
-        try:
-            client_id = os.getenv("CLIENT_ID")
-        except:
+        client_id = os.getenv("CLIENT_ID")
+        if client_id is None:
             exit(
                 "ERROR: CLIENT_ID EnvVar not found"
             )
@@ -67,9 +44,8 @@ def main():
         client_id = args.clientId
 
     if args.envSecret == True:
-        try:
-            client_secret= os.getenv("SECRET")
-        except:
+        client_secret= os.getenv("SECRET")
+        if client_secret is None:
             exit(
                 "ERROR: SECRET EnvVar not found"
             )
@@ -78,9 +54,14 @@ def main():
 
     rkvst_url = args.url
 
+    arch = archivist.Archivist(
+        rkvst_url,
+        None
+        )
+
     try:
-            authtoken = generate_token(client_id, client_secret, rkvst_url)
-    except:
+            arch.appidp.token(client_id, client_secret)
+    except ArchivistError:
         exit(
             "ERROR: Auth token not found. Please check your CLIENT_ID and AUTH_TOKEN."
         )
@@ -90,11 +71,6 @@ def main():
     sbom_files = args.sbomFiles
 
     print(args.sbomFiles)
-
-    arch = archivist.Archivist(
-        rkvst_url,
-        auth=authtoken,
-        )
 
     upload_sbom(arch, sbom_files, args.noPublish)
 
