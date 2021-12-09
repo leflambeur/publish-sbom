@@ -56,7 +56,7 @@ def main():
 
     arch = archivist.Archivist(
         rkvst_url,
-        None
+        "This is a Token"
         )
 
     try:
