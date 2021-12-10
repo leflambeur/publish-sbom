@@ -1,4 +1,5 @@
 from archivist.archivist import Archivist
+import time
 import argparse
 import os
 
@@ -11,6 +12,7 @@ def upload_sbom(arch, sbom_files, no_publish):
             sbom_upload = arch.sboms.upload(fd)
             print("Uploading " + sbom_upload.identity)
             if no_publish == False:
+                time.sleep(1)
                 print("Publishing " + sbom_upload.identity)
                 arch.sboms.publish(sbom_upload.identity, confirm=True)
             print(sbom_upload)
