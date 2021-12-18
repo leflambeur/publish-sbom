@@ -1,19 +1,16 @@
-from archivist.archivist import Archivist
 import argparse
 import os
 
+from archivist.archivist import Archivist
 
 def upload_sbom(arch, sbom_files, no_publish):
 #no_publish
     for sbom in sbom_files:
         print("Uploading " + sbom)
         with open(sbom, 'rb') as fd:
-            if no_publish == False:
-                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PUBLIC"}, confirm=True)
-                print("Uploaded " + sbom_upload.identity + " Publicly")
-            else:
-                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PRIVATE"}, confirm=True)
-                print("Uploaded " + sbom_upload.identity + " Privately")
+            visible = "PRIVATE" if no_publish else "PUBLIC"
+            sbom_upload = arch.sboms.upload(fd, confirm=True, params={"privacy": visible })
+            print("Uploaded", visible, sbom_upload.identity)
             print(sbom_upload)
     return
 
@@ -68,7 +65,6 @@ def main():
     print(args.sbomFiles)
 
     upload_sbom(arch, sbom_files, args.noPublish)
-
 
 if __name__ == "__main__":
     main()
