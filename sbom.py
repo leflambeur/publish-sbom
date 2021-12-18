@@ -9,10 +9,10 @@ def upload_sbom(arch, sbom_files, no_publish):
         print("Uploading " + sbom)
         with open(sbom, 'rb') as fd:
             if no_publish == False:
-                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PUBLIC"})
+                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PUBLIC"}, confirm=True)
                 print("Uploaded " + sbom_upload.identity + " Publicly")
             else:
-                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PRIVATE"})
+                sbom_upload = arch.sboms.upload(fd, params={"privacy": "PRIVATE"}, confirm=True)
                 print("Uploaded " + sbom_upload.identity + " Privately")
             print(sbom_upload)
     return
