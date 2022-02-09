@@ -49,4 +49,4 @@ jobs:
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-          sbom-files: "jitsuin-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx/jitsuin-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx"
+          sbom-files: "yewnorosen-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx/yewnorosen-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx"
