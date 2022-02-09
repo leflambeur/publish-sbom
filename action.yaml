@@ -27,9 +27,9 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - --url ${{inputs.url}}
-    - --client_id ${{inputs.client-id}}
-    - --client_secret ${{inputs.client-secret}}
-    - --format ${{inputs.format}}
-    - --publish ${{ inputs.publish }}
-    - ${{ inputs.sbom-files }}
+    - -u ${{inputs.url}}
+    - -c ${{inputs.client-id}}
+    - -s ${{inputs.client-secret}}
+    - -f ${{inputs.format}}
+    - -p ${{inputs.publish}}
+    - ${{inputs.sbom-filess}}

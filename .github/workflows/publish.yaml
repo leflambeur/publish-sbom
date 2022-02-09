@@ -3,7 +3,6 @@ on:
   release:
          types: ['published']
 jobs:
-
   build-and-publish-images:
     name: Build and publish publish-sbom image
     runs-on: ubuntu-latest
@@ -38,6 +37,7 @@ jobs:
         with:
           image: yewnorosen/publish-sbom:${{ github.event.release.tag_name }}
           format: cyclonedx
+
           
   publish-sbom:
     name: Publish SBOM to RKVST
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
-      - uses: leflambeur/publish-sbom@v0.1.2
+      - uses: leflambeur/publish-sbom@v0.1.3
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
