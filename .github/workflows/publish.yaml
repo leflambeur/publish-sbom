@@ -1,0 +1,52 @@
+name: Release
+on: 
+  release:
+         types: ['published']
+jobs:
+
+  build-and-publish-images:
+    name: Build and publish publish-sbom image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_API_TOKEN }}
+      - name: checkout main
+        uses: actions/checkout@v2
+        with:
+          path: main
+      - name: Build and push publish-sbom latest
+        uses: docker/build-push-action@v2
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: jitsuin/publish-sbom:latest
+      - name: Build and push publish-sbom version
+        uses: docker/build-push-action@v2
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: jitsuin/publish-sbom:${{ github.event.release.tag_name }}
+  
+  generate-sbom:
+    name: Generate SBOM
+    needs: build-and-publish-images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anchore/sbom-action@v0.6.0
+        with:
+          image: jitsuin/publish-sbom:${{ github.event.release.tag_name }}
+          format: cyclonedx
+          
+  publish-sbom:
+    name: Publish SBOM to RKVST
+    needs: generate-sbom
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+      - uses: jitsuin-inc/publish-sbom@v0.0.2
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          sbom-files: "jitsuin-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx/jitsuin-publish-sbom_${{ github.event.release.tag_name }}.cyclonedx"
