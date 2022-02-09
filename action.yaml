@@ -1,5 +1,5 @@
 # action.yml
-name: 'publish-sbom'
+name: 'yewnorosen-sbom'
 description: 'GitHub Action for publishing to RKVST SBOM Hub'
 inputs:
   url: 
