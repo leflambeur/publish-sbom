@@ -31,5 +31,5 @@ runs:
     - -c ${{inputs.client-id}}
     - -s ${{inputs.client-secret}}
     - --format ${{inputs.format}}
-    - -p ${{inputs.publish}}
+    - --publish ${{inputs.publish}}
     - ${{inputs.sbom-filess}}

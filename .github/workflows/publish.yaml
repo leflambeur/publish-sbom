@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
-      - uses: leflambeur/publish-sbom@v0.1.4a
+      - uses: leflambeur/publish-sbom@v0.1.5
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
