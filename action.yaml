@@ -30,6 +30,6 @@ runs:
     - -u ${{inputs.url}}
     - -c ${{inputs.client-id}}
     - -s ${{inputs.client-secret}}
-    - -f ${{inputs.format}}
+    - --format ${{inputs.format}}
     - -p ${{inputs.publish}}
     - ${{inputs.sbom-filess}}
