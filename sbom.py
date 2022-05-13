@@ -1,7 +1,9 @@
 import argparse
 import os
+import json
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 
 def str2bool(v):
     return v.lower() in ("yes", "y", "true", "t", "1")
@@ -12,7 +14,7 @@ def main():
     
     parser.add_argument('--url', '-u', default='https://app.rkvst.io', help='SBOM URL to upload to')
     parser.add_argument('--publish', '-p', type=str.lower, choices=['true', 'false'], default='false', help='Publish the SBOM publicly')
-    parser.add_argument('--format', '-f', choices=["cyclonedx-xml", "cyclonedx-json", "spdx-tag"], default="cyclonedx-xml", help='The SBOM format being submitted')
+    parser.add_argument('--format', '-f', choices=["cyclonedx-xml", "cyclonedx-json", "spdx-tag", "spdx-json"], default="cyclonedx-xml", help='The SBOM format being submitted')
     parser.add_argument('--client_id', '-c', help='Specify Application CLIENT_ID inline')
     parser.add_argument('--client_secret', '-s', help='Specify Application CLIENT_SECRET inline')
     parser.add_argument('sbomfiles', metavar='<sbom-file>', nargs='+', help='SBOM to be uploaded')
@@ -26,19 +28,27 @@ def main():
             except KeyError:
                 print(f"use --{envopt} or set SBOM_{envopt.upper()} as an envvar")
 
+    set_logger("DEBUG")
+
     arch = Archivist(
         args.url,
         (args.client_id, args.client_secret),
     )
-    
+
     for sbom in args.sbomfiles:
         print("Uploading " + sbom)
         with open(sbom, 'rb') as fd:
             visible = "PUBLIC" if str2bool(args.publish) else "PRIVATE"
-            sbom_upload = arch.sboms.upload(fd, confirm=True, params={"privacy": visible, "sbomType": args.format})
+            try:
+                sbom_upload = arch.sboms.upload(fd, confirm=True, params={"privacy": visible, "sbomType": args.format})
+            except:
+                print("Token:" + str(arch._auth))
             print("Uploaded", visible, sbom_upload.identity)
             print(sbom_upload)
+            
     return
+
+    
 
 if __name__ == "__main__":
     main()
